@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from "react";
-import { Icon,Menu, Table } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Icon,Menu, Table ,Button} from "semantic-ui-react";
 import JobAdvertisementService from "../services/jobAdvertisementService";
 
 
@@ -10,7 +11,7 @@ export default function JobAdvertismentList() {
   useEffect(()=>{
     let jobAdvertisementService = new JobAdvertisementService()
     jobAdvertisementService.getJobAdvertisement().then(result=>setJobAdvertisements(result.data.data))
-  })
+  },[])
     
     return (
         <div>
@@ -24,6 +25,8 @@ export default function JobAdvertismentList() {
             <Table.HeaderCell>Phone Number</Table.HeaderCell>
             <Table.HeaderCell>Release Date</Table.HeaderCell>
             <Table.HeaderCell>Deadline</Table.HeaderCell>
+            <Table.HeaderCell>Detail</Table.HeaderCell>
+            
           </Table.Row>
         </Table.Header>
 
@@ -37,6 +40,11 @@ export default function JobAdvertismentList() {
               <Table.Cell>{jobAdvertisement.employer.phoneNumber}</Table.Cell>
               <Table.Cell>{jobAdvertisement.releaseDate}</Table.Cell>
               <Table.Cell>{jobAdvertisement.applicationDeadline}</Table.Cell>
+              <Table.Cell><Button as={Link} to={`/JobAds/${jobAdvertisement.id}`} animated>
+             <Button.Content visible><Icon name='arrow right'/></Button.Content>
+                   <Button.Content hidden>
+                     <Icon name='arrow right' />
+                </Button.Content></Button></Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
